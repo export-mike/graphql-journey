@@ -11,12 +11,15 @@ app.use('*', cors());
 app.use(
   '/graphql',
   bodyParser.json(),
-  graphqlExpress({ schema: myGraphQLSchema, context: {}, })
+  graphqlExpress({ schema: myGraphQLSchema, context: {} })
 );
 
-app.use('/graphiql', graphiqlExpress({
-  endpointURL: '/graphql',
-}));
+app.use(
+  '/graphiql',
+  graphiqlExpress({
+    endpointURL: '/graphql',
+  })
+);
 
 app.listen(PORT);
-console.log('running', PORT)
+console.log('running', PORT);
