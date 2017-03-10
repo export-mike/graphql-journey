@@ -31,8 +31,8 @@ type Query {
   manufacturer(id: Int!): Manufacturer
   manufacturers: [Manufacturer]
   cars(numberOfSeats: Int!): [Car]
-  chuckNorrisJokeCategories: [ChuckNorrisJokeCategory]
-  getJokeByCategory(category: String!): ChuckNorrisJoke
+  jokeCategories: [ChuckNorrisJokeCategory]
+  joke(category: String!): ChuckNorrisJoke
 }
 `;
 // add mutations to vote on jokes and not show them again if bad!
