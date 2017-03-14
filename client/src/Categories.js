@@ -1,7 +1,10 @@
 import React from 'react';
 import { gql, graphql } from 'react-apollo';
 import logo from './logo.svg';
-
+import { Link } from 'react-router-dom';
+// <a key={c.category} href={`/joke/${c.category}`}>
+//   {c.category}
+// </a>
 const App = props => (
   <div className="App">
     <div className="App-header">
@@ -13,15 +16,10 @@ const App = props => (
       <p className="App-intro">
         {props.data.jokeCategories.map(c => (
           <div>
-            <a key={c.category} href={`/joke/${c.category}`}>
+
+            <Link key={c.category} to={`/joke/${c.category}`}>
               {c.category}
-            </a>
-            {/* This is erroring?!
-              <Link
-              key={c.category}
-              to={`/joke/${c.category}`}>
-              {c.category}
-            </Link> */}
+            </Link>
           </div>
         ))}
       </p>}

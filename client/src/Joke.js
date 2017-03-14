@@ -2,12 +2,14 @@ import React from 'react';
 import compose from 'recompose/compose';
 import { gql, graphql } from 'react-apollo';
 import logo from './logo.svg';
+import { Link } from 'react-router-dom';
 
 const Joke = props => (
   <div className="App">
     <div className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
       <h2>Time to have a laugh with Chuck Norris</h2>
+      <Link to="/">Categories</Link>
       {props.data.loading && <span>Loading a cracking Joke!</span>}
     </div>
     {!props.data.loading && props.data.joke.value}
