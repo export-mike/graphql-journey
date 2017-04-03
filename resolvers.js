@@ -13,16 +13,19 @@ const manufacturers = [
   { id: 4, name: 'BMW' },
 ];
 
+const categories = [];
+const jokes = [];
+
 const resolveFunctions = {
   Query: {
-    cars() {
-      return cars;
-    },
     car(_, { id }) {
       return find(cars, { id });
     },
     cars(_, { numberOfSeats }) {
-      return filter(cars, { numberOfSeats });
+      if (numberOfSeats) {
+        return filter(cars, { numberOfSeats });
+      }
+      return cars;
     },
     manufacturers() {
       return manufacturers;
@@ -31,19 +34,29 @@ const resolveFunctions = {
       return find(manufacturers, { id });
     },
     async joke(_, args) {
+      const joke = filterByCategory(args.category);
+      if (joke) return joke;
+
       const response = await fetch(
         `https://api.chucknorris.io/jokes/random?category=${args.category}`
       );
       const { icon_url, value, category, url, id } = await response.json();
-      return {
+      const newJoke = {
         iconUrl: icon_url,
         value,
         category,
         url,
         id,
       };
+
+      addJoke(newJoke);
+      return newJoke;
     },
     async jokeCategories() {
+      if (categories.length) {
+        return categories;
+      }
+
       const response = await fetch(
         'https://api.chucknorris.io/jokes/categories'
       );
