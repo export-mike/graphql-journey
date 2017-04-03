@@ -14,11 +14,11 @@ type Manufacturer {
   name: String
   cars: [Car]
 }
-type ChuckNorrisJokeCategory {
+type JokeCategory {
   category: String!
 }
-type ChuckNorrisJoke {
-  category: [ChuckNorrisJokeCategory]
+type Joke {
+  category: [JokeCategory]
   iconUrl: String!
   id: String!
   url: String!
@@ -26,13 +26,12 @@ type ChuckNorrisJoke {
 }
 # the schema allows the following query:
 type Query {
-  cars: [Car]
   car(id: Int!): Car
   manufacturer(id: Int!): Manufacturer
   manufacturers: [Manufacturer]
-  cars(numberOfSeats: Int!): [Car]
-  jokeCategories: [ChuckNorrisJokeCategory]
-  joke(category: String!): ChuckNorrisJoke
+  cars(numberOfSeats: Int): [Car]
+  jokeCategories: [JokeCategory]
+  joke(category: String!): Joke
 }
 `;
 // add mutations to vote on jokes and not show them again if bad!

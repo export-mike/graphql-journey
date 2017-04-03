@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node index.js",
     "precommit": "lint-staged",
-    "prettier": "prettier --single-quote --trailing-comma es5 --write"
+    "prettier": "prettier --single-quote --trailing-comma es5 --write",
+    "format": "prettier-eslint \"src/**/*.js\"",
+    "start:dev": "nodemon index.js"
   },
   "lint-staged": {
     "*.js": [
@@ -26,9 +28,11 @@
     "graphql-tools": "^0.8.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.15.0",
+    "prettier-eslint-cli": "^3.1.2",
     "subscriptions-transport-ws": "^0.3.1"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.1",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.2.1",
     "babel-register": "^6.23.0",
