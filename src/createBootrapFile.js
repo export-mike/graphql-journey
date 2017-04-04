@@ -2,9 +2,9 @@
 import type { Types } from '../types';
 import serialize from 'serialize-javascript';
 
-export default (types: Types) => {
+export default (components: Object) => {
   const template = `
-    const components = ${serialize(types.components)}
+    const components = ${serialize(components)}
 
     export default components;
   `;
