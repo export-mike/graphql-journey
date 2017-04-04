@@ -134,6 +134,11 @@ export default registerType =>
 //                       .returns()
 //                       .listOfInts()
 // }
+export default {
+  type: {
+    MyAuthor
+  }
+}
 
 const UITypes = {
   id: fieldTypes.ReadOnly.String,
