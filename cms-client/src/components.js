@@ -4,6 +4,12 @@ const components = {
     title: ['ReadOnlyString'],
     name: ['ReadOnlyString'],
   },
+  Car: {
+    id: ['ReadOnlyString'],
+    model: ['ReadOnlyString'],
+    make: ['ReadOnlyString'],
+    reg: ['ReadOnlyString'],
+  },
   Post: {
     id: ['ReadOnlyString'],
     title: ['ReadOnlyString'],
@@ -16,6 +22,13 @@ export const componentsAsArray = [
     title: ['ReadOnlyString'],
     name: ['ReadOnlyString'],
     displayName: 'Author',
+  },
+  {
+    id: ['ReadOnlyString'],
+    model: ['ReadOnlyString'],
+    make: ['ReadOnlyString'],
+    reg: ['ReadOnlyString'],
+    displayName: 'Car',
   },
   {
     id: ['ReadOnlyString'],
