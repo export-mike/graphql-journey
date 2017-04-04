@@ -1,77 +1,27 @@
-'use strict';
+// @flow
+import importAndBuildSchema from './build-schema';
+import importUiComponents from './importUiComponents';
+import createBootrapFile from './createBootrapFile';
 
-var _buildSchema = require('./build-schema');
+type Config = {
+  typesPath: string,
+  outputPath: string,
+};
 
-var _buildSchema2 = _interopRequireDefault(_buildSchema);
+export default class QlCms {
+  config: Config;
 
-var _importUiComponents = require('./importUiComponents');
-
-var _importUiComponents2 = _interopRequireDefault(_importUiComponents);
-
-var _createBootrapFile = require('./createBootrapFile');
-
-var _createBootrapFile2 = _interopRequireDefault(_createBootrapFile);
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function _asyncToGenerator(fn) {
-  return function() {
-    var gen = fn.apply(this, arguments);
-    return new Promise(function(resolve, reject) {
-      function step(key, arg) {
-        try {
-          var info = gen[key](arg);
-          var value = info.value;
-        } catch (error) {
-          reject(error);
-          return;
-        }
-        if (info.done) {
-          resolve(value);
-        } else {
-          return Promise.resolve(value).then(
-            function(value) {
-              step('next', value);
-            },
-            function(err) {
-              step('throw', err);
-            }
-          );
-        }
-      }
-      return step('next');
-    });
-  };
-}
-
-class QlCms {
-  constructor(config = { typesPath: './types', outputPath: './cms' }) {
+  constructor(config: Config = { typesPath: './types', outputPath: './cms' }) {
     this.config = config;
   }
 
-  buildSchema() {
-    var _this = this;
-
-    return _asyncToGenerator(function*() {
-      const schema = yield (0, _buildSchema2.default)(_this.config.typesPath);
-      return schema;
-    })();
+  async buildSchema() {
+    const schema = await importAndBuildSchema(this.config.typesPath);
+    return schema;
   }
-  buildCms() {
-    var _this2 = this;
-
-    return _asyncToGenerator(function*() {
-      const uiComponents = yield (0, _importUiComponents2.default)(
-        _this2.config.typesPath
-      );
-      yield (0, _createBootrapFile2.default)(
-        uiComponents,
-        _this2.config.outputPath
-      );
-      console.log('done');
-    })();
+  async buildCms() {
+    const uiComponents = await importUiComponents(this.config.typesPath);
+    return await createBootrapFile(uiComponents, this.config.outputPath);
   }
 }
 
