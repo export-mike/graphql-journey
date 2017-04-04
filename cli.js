@@ -1,13 +1,7 @@
-import cms from './src/qlcms';
-
-async function main() {
-  const schema = await new cms({
-    typesPath: `${process.cwd()}/model`,
-  }).buildSchema();
-
-  const template = await new cms({
-    typesPath: `${process.cwd()}/model`,
-  }).buildCms();
-}
-
-main();
+require('babel-register');
+require('babel-polyfill');
+const cms = require('./src/qlcms').default;
+const b = new cms({
+  typesPath: `${process.cwd()}/model`,
+}).buildCms();
+console.log(b);

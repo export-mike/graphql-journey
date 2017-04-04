@@ -2,6 +2,6 @@
 import importTypes from './importTypes';
 import objectToArray from './objectToArray';
 import getTypeInformation from './getTypeInformation';
+import R from 'ramda';
 
-export default (typesPath: string) =>
-  importTypes(typesPath).then(objectToArray).then(getTypeInformation);
+export default R.pipe(importTypes, objectToArray, getTypeInformation);

@@ -15,13 +15,15 @@ export default class QlCms {
     this.config = config;
   }
 
-  async buildSchema() {
-    const schema = await importAndBuildSchema(this.config.typesPath);
+  buildSchema() {
+    const schema = importAndBuildSchema(this.config.typesPath);
     return schema;
   }
-  async buildCms() {
-    const uiComponents = await importUiComponents(this.config.typesPath);
-    return await createBootrapFile(uiComponents, this.config.outputPath);
+
+  buildCms() {
+    const uiComponents = importUiComponents(this.config.typesPath);
+    const jsFile = createBootrapFile(uiComponents, this.config.outputPath);
+    return jsFile;
   }
 }
 
