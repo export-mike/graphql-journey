@@ -5,7 +5,9 @@ import logo from './logo.svg';
 import { Link } from 'react-router-dom';
 import { componentsAsArray } from './components';
 
-const Count = props => <li> {props.displayName}s {props.count} </li>;
+const Count = props => (
+  <Link to={`/${props.displayName}`}> {props.displayName}s {props.count} </Link>
+);
 
 const dataKey = component => `count${component.displayName}s`;
 
