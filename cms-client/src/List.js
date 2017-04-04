@@ -58,41 +58,45 @@ const mapToArray = map => Object.keys(map).reduce(
 export default class ListContainer extends Component {
   list = () => <div> Loading... </div>;
   state = { list: '', notFound: false };
-  // componentWillUpdate(nextProps, state) {
-  //   this.handleList(nextProps);
-  // }
-  // componentWillMount() {
-  //   this.handleList(this.props);
-  // }
-  // handleList(nextProps) {
-  //   const list = nextProps.match.params.list;
-  //   if (this.state.list === list) return;
-  //
-  //   const listParams = this.listParams = getListParams(list);
-  //   if (!listParams.length) {
-  //     this.setState({
-  //       notFound: true,
-  //       list
-  //     });
-  //     return;
-  //   }
-  //   this.setState({ notFound: false, list });
-  //   const query = listQuery(list, listParams);
-  //   this.list = graphql(query)(List);
-  // }
+  componentWillUpdate(nextProps, state) {
+    this.handleList(nextProps);
+  }
+  componentWillMount() {
+    this.handleList(this.props);
+  }
+  handleList(nextProps) {
+    const list = nextProps.match.params.list;
+    if (this.state.list === list) return;
+
+    const listParams = (this.listParams = getListParams(list));
+    if (!listParams.length) {
+      this.setState({
+        notFound: true,
+        list,
+      });
+      return;
+    }
+    this.setState({ notFound: false, list });
+    const plural = (this.plural = `${list.toLowerCase()}s`);
+    const query = listQuery(list, plural, listParams);
+
+    this.ListComponent = graphql(query)(List);
+  }
   render() {
     const list = this.props.match.params.list;
-    const listParams = getListParams(list);
-    if (!listParams.length) {
+    const listParams = this.listParams;
+    if (this.state.notFound) {
       return (
         <h1>{list.substr(0, 1).toUpperCase()}{list.substr(1)} Not Found</h1>
       );
     }
-    const plural = `${list.toLowerCase()}s`;
-    const query = listQuery(list, plural, listParams);
-    const ListComponent = graphql(query)(List);
+
     return (
-      <ListComponent listParams={listParams} plural={plural} listName={list} />
+      <this.ListComponent
+        listParams={listParams}
+        plural={this.plural}
+        listName={list}
+      />
     );
   }
 }
