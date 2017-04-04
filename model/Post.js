@@ -8,6 +8,7 @@ export const schema = `
 
 export const rootQueries = `
   posts: [Post]
+  countPosts: Int!
 `;
 
 // const rootMutations = ``;
@@ -22,6 +23,9 @@ export const resolvers = {
           content: 'This is a graphql cms post',
         },
       ];
+    },
+    countPosts() {
+      return 1;
     },
   },
 };
