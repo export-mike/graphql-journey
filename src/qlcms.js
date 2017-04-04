@@ -1,7 +1,6 @@
 // @flow
 import importAndBuildSchema from './build-schema';
-import importUiComponents from './importUiComponents';
-import createBootrapFile from './createBootrapFile';
+import createComponentsJsFile from './createComponentsJsFile';
 
 type Config = {
   typesPath: string,
@@ -21,8 +20,10 @@ export default class QlCms {
   }
 
   buildCms() {
-    const uiComponents = importUiComponents(this.config.typesPath);
-    const jsFile = createBootrapFile(uiComponents, this.config.outputPath);
+    const jsFile = createComponentsJsFile(
+      this.config.typesPath,
+      this.config.outputPath
+    );
     return jsFile;
   }
 }

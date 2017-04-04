@@ -1,5 +1,6 @@
 // @flow
 import type { Types } from '../types';
+import deepmerge from 'deepmerge';
 
 type CMSType = {
   resolvers: Object,
@@ -27,11 +28,11 @@ export default (types: Array<CMSType>): Types => {
     []
   );
 
+  // allow Query, Mutations and Property Queries to co-exist
   const resolvers = types.reduce(
-    (acc, type) => ({
-      ...acc,
-      ...type.resolvers,
-    }),
+    (acc, type) => {
+      return deepmerge(acc, type.resolvers);
+    },
     {}
   );
 

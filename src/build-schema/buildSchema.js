@@ -40,22 +40,7 @@ const rootSchema = (queries, mutations, definition) => {
     ${definition}
   `;
 };
-// `type RootQueries {
-//  jokeCategories: [JokeCategory]
-//  joke(category: String!): Joke
-// }
-// schema {
-//  query: RootQueries
-// }
-// type JokeCategory {
-//  category: String!
-// }
-// type Joke {
-//  iconUrl: String!
-//  id: String!
-//  url: String!
-//  value: String!
-// }`,
+
 const buildSchema = (
   { schemas, resolvers, rootQueries, rootMutations }: Types
 ) => {
@@ -67,7 +52,7 @@ const buildSchema = (
       rootSchema(queries, mutations, schemaDefinition(queries, mutations)),
       ...schemas,
     ],
-    resolvers: { RootQueries: resolvers },
+    resolvers: resolvers, // rootMutations
   });
 };
 
