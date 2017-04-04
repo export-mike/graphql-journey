@@ -13,4 +13,17 @@ const ignoreTypesWithNoComponents = types => Object.keys(
   {}
 );
 
-export default R.pipe(getTypes, ignoreTypesWithNoComponents, createBootrapFile);
+const constructDataForTemplate = components => ({
+  components,
+  componentsAsArray: Object.keys(components).reduce(
+    (acc, k) => [...acc, { ...components[k], displayName: k }],
+    []
+  ),
+});
+
+export default R.pipe(
+  getTypes,
+  ignoreTypesWithNoComponents,
+  constructDataForTemplate,
+  createBootrapFile
+);
