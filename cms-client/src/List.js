@@ -1,9 +1,8 @@
+// @flow
 import React, { Component } from 'react';
-import compose from 'recompose/compose';
 import { gql, graphql } from 'react-apollo';
-import logo from './logo.svg';
 import { Link } from 'react-router-dom';
-import components from './components';
+import types from './types';
 
 const ListItem = ({ item, keys }) => (
   <tr>
@@ -42,9 +41,13 @@ const listQuery = (list, plural, listParams) => gql`
   }
 `;
 
+// const blacklist = ['readOnly'];
+
+const getType = list => types[list] || {};
 const getListParams = list => {
-  const listParams = components[list] || {};
+  const listParams = getType(list);
   return Object.keys(listParams).map(k => k);
+  // .filter(k => !blacklist.includes(k));
 };
 
 const mapToArray = map => Object.keys(map).reduce(
@@ -55,10 +58,20 @@ const mapToArray = map => Object.keys(map).reduce(
   []
 );
 
+type Props = {
+  data: Object,
+};
+
+type State = {
+  list: String,
+  notFound: Boolean,
+};
+
 export default class ListContainer extends Component {
   list = () => <div> Loading... </div>;
-  state = { list: '', notFound: false };
-  componentWillUpdate(nextProps, state) {
+  state: State = { list: '', notFound: false };
+  props: Props;
+  componentWillUpdate(nextProps: Props, state) {
     this.handleList(nextProps);
   }
   componentWillMount() {
@@ -84,19 +97,23 @@ export default class ListContainer extends Component {
   }
   render() {
     const list = this.props.match.params.list;
+    const types = getType(list);
     const listParams = this.listParams;
     if (this.state.notFound) {
       return (
         <h1>{list.substr(0, 1).toUpperCase()}{list.substr(1)} Not Found</h1>
       );
     }
-
+    const { readOnly, ...rest } = types;
     return (
-      <this.ListComponent
-        listParams={listParams}
-        plural={this.plural}
-        listName={list}
-      />
+      <div>
+        {!readOnly && <Link to={`${list}/create`}> Create </Link>}
+        <this.ListComponent
+          listParams={listParams}
+          plural={this.plural}
+          listName={list}
+        />
+      </div>
     );
   }
 }

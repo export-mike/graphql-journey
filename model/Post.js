@@ -15,7 +15,7 @@ export const rootQueries = `
 
 export const resolvers = {
   RootQueries: {
-    posts() {
+    posts(_, args, context) {
       return [
         {
           id: '12313',
@@ -33,7 +33,7 @@ export const resolvers = {
 export const components = {
   Post: {
     id: ['ReadOnlyString'],
-    title: ['ReadOnlyString'],
-    content: ['ReadOnlyString'],
+    title: ['TextInput'],
+    content: ['TextInput'],
   },
 };

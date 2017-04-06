@@ -3,7 +3,7 @@ import compose from 'recompose/compose';
 import { gql, graphql } from 'react-apollo';
 import logo from './logo.svg';
 import { Link } from 'react-router-dom';
-import { componentsAsArray } from './components';
+import { typesAsArray } from './types';
 
 const Count = props => (
   <Link to={`/${props.displayName}`}> {props.displayName}s {props.count} </Link>
@@ -11,7 +11,7 @@ const Count = props => (
 
 const dataKey = component => `count${component.displayName}s`;
 
-const dataKeys = componentsAsArray.map(dataKey);
+const dataKeys = typesAsArray.map(dataKey);
 
 const Home = props => {
   return (
@@ -20,16 +20,16 @@ const Home = props => {
         .filter(k => dataKeys.includes(k))
         .map((k, i) => ({
           count: props.data[k],
-          ...componentsAsArray[i],
+          ...typesAsArray[i],
         }))
-        .map(component => <Count key={component.displayName} {...component} />)}
+        .map(type => <Count key={type.displayName} {...type} />)}
     </div>
   );
 };
 
 const HomeQuery = gql`
   query Count {
-    ${componentsAsArray.map(component => dataKey(component))}
+    ${typesAsArray.map(component => dataKey(component))}
   }
 `;
 

@@ -1,4 +1,5 @@
-const components = {
+// Add imports to paths to custom components
+const types = {
   Author: {
     id: ['ReadOnlyString'],
     title: ['ReadOnlyString'],
@@ -12,11 +13,11 @@ const components = {
   },
   Post: {
     id: ['ReadOnlyString'],
-    title: ['ReadOnlyString'],
-    content: ['ReadOnlyString'],
+    title: ['TextInput'],
+    content: ['TextInput'],
   },
 };
-export const componentsAsArray = [
+export const typesAsArray = [
   {
     id: ['ReadOnlyString'],
     title: ['ReadOnlyString'],
@@ -32,9 +33,9 @@ export const componentsAsArray = [
   },
   {
     id: ['ReadOnlyString'],
-    title: ['ReadOnlyString'],
-    content: ['ReadOnlyString'],
+    title: ['TextInput'],
+    content: ['TextInput'],
     displayName: 'Post',
   },
 ];
-export default components;
+export default types;

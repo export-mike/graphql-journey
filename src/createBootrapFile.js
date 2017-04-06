@@ -9,9 +9,10 @@ type Data = {
 
 export default (data: Data) => {
   const template = `
-    const components = ${serialize(data.components)};
-    export const componentsAsArray = ${serialize(data.componentsAsArray)};
-    export default components;
+		// Add imports to paths to custom components
+    const types = ${serialize(data.components)};
+    export const typesAsArray = ${serialize(data.componentsAsArray)};
+    export default types;
   `;
   return template;
 };
