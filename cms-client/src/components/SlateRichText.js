@@ -39,7 +39,9 @@ export default class App extends React.Component {
     super(props);
     const id = props.isCreate ? 'create' : props.value.id;
     this.localStorageKey = `${props.type}${id}`;
-    const winningState = localStorage.getItem(this.localStorageKey) ||
+    const winningState = JSON.parse(
+      localStorage.getItem(this.localStorageKey)
+    ) ||
     props.value || { ...initialState };
 
     console.log('winningState', winningState);
@@ -51,7 +53,10 @@ export default class App extends React.Component {
 
   onChange = (state: State) => {
     this.setState({ state });
-    localStorage.setItem(this.localStorageKey, Raw.serialize(state));
+    localStorage.setItem(
+      this.localStorageKey,
+      JSON.stringify(Raw.serialize(state))
+    );
     this.props.onChange(state); // don't bother serialising for the parent
   };
 
