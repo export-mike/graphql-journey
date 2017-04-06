@@ -34,6 +34,6 @@ export const components = {
   Post: {
     id: ['ReadOnlyString'],
     title: ['TextInput'],
-    content: ['TextInput'],
+    content: ['SlateRichText'],
   },
 };

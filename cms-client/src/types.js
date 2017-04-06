@@ -14,7 +14,7 @@ const types = {
   Post: {
     id: ['ReadOnlyString'],
     title: ['TextInput'],
-    content: ['TextInput'],
+    content: ['SlateRichText'],
   },
 };
 export const typesAsArray = [
@@ -34,7 +34,7 @@ export const typesAsArray = [
   {
     id: ['ReadOnlyString'],
     title: ['TextInput'],
-    content: ['TextInput'],
+    content: ['SlateRichText'],
     displayName: 'Post',
   },
 ];

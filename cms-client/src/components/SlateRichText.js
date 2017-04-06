@@ -3,46 +3,56 @@ import React from 'react';
 import { Editor, Raw } from 'slate';
 
 // Create our initial state...
-const initialState = Raw.deserialize(
-  {
-    nodes: [
-      {
-        kind: 'block',
-        type: 'paragraph',
-        nodes: [
-          {
-            kind: 'text',
-            text: 'A line of text in a paragraph.',
-          },
-        ],
-      },
-    ],
-  },
-  { terse: true }
-);
+const initialState = {
+  nodes: [
+    {
+      kind: 'block',
+      type: 'paragraph',
+      nodes: [
+        {
+          kind: 'text',
+          text: 'A line of text in a paragraph.',
+        },
+      ],
+    },
+  ],
+};
 
-class App extends React.Component {
-  // Set the initial state when the app is first constructed.
-  // state = {
-  //   state: initialState
-  // }
-  constructor(props) {
+type Props = {
+  type: string,
+  value: Object,
+  isCreate: boolean,
+  onChange: Function,
+};
+
+type State = {
+  state: Object,
+};
+
+export default class App extends React.Component {
+  props: Props;
+  state: State = { state: {} };
+  localStorageKey: string;
+
+  constructor(props: Props) {
     // create a unique id for the localstorage so you can switch between field types when editing.
-
-    const id = props.isCreate ? 'create' : props.id;
+    super(props);
+    const id = props.isCreate ? 'create' : props.value.id;
     this.localStorageKey = `${props.type}${id}`;
+    const winningState = localStorage.getItem(this.localStorageKey) ||
+    props.value || { ...initialState };
+
+    console.log('winningState', winningState);
+
     this.state = {
-      state: Raw.deserialize(
-        localStorage.getItem(this.localStorageKey) || props.value
-      ),
+      state: Raw.deserialize(winningState, { terse: true }),
     };
   }
 
-  // On change, update the app's React state with the new editor state.
-  onChange = state => {
+  onChange = (state: State) => {
     this.setState({ state });
     localStorage.setItem(this.localStorageKey, Raw.serialize(state));
-    props.onChange(state); // don't bother serialising for the parent
+    this.props.onChange(state); // don't bother serialising for the parent
   };
 
   // Render the editor.

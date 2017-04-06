@@ -30,16 +30,6 @@ const submitMutation = (Type: string, fields: ListParams) => {
 	`;
 };
 
-type Props = {
-  data: Object,
-};
-
-type State = {
-  list: string,
-  notFound: boolean,
-};
-type ListParams = Array<string>;
-
 type CreateFormState = {
   form: Object,
 };
@@ -68,6 +58,8 @@ class CreateForm extends Component {
               key={l}
               onChange={this.handleChange(l)}
               value={this.state.form[l]}
+              type={this.props.typeName}
+              isCreate
             />
           );
         })}
@@ -90,6 +82,16 @@ class CreateForm extends Component {
     );
   }
 }
+
+type Props = {
+  data: Object,
+};
+
+type State = {
+  list: string,
+  notFound: boolean,
+};
+type ListParams = Array<string>;
 
 export default class ListContainer extends Component {
   list = () => <div> Loading... </div>;
